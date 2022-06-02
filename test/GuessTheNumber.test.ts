@@ -1,4 +1,5 @@
 import { ethers } from 'hardhat'
+import { BigNumber } from 'ethers'
 import { expect } from 'chai'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { GuessTheNumberChallenge } from '../typechain-types'
@@ -15,8 +16,9 @@ describe('GuessTheNumberChallenge', async function () {
   })
 
   it('Attack', async function () {
-    const a = 0 // input a number
-    const b = 0 // input a number
+    const MAX_UINT256 = BigNumber.from("2").pow(256)
+    const a = BigNumber.from("0") 
+    const b = MAX_UINT256.sub(1000)
     await challenge.input(a, b)
     expect(await challenge.isSolved()).to.be.true
   })
